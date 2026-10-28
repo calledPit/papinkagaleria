@@ -1,0 +1,12 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import BlogListView from '../../views/BlogListView.astro';
+import { getPosts, POSTS_PER_PAGE, type Post } from '../../lib/blog';
+
+export const getStaticPaths = (async ({ paginate }) =>
+  paginate(await getPosts('id'), { pageSize: POSTS_PER_PAGE })) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: Page<Post> };
+---
+
+<BlogListView page={page} />

@@ -1,8 +1,16 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-import { categories } from '../config/site';
-import { formatCapacity, formatPrice, productPath, productWhatsappLink, type Product } from '../lib/products';
+import { categoryInfo, getLocale, t } from '../i18n';
+import {
+  formatCapacity,
+  priceLabel,
+  productAlt,
+  productName,
+  productPath,
+  productWhatsappLink,
+  type Product,
+} from '../lib/products';
 
 interface Props {
   product: Product;
@@ -13,26 +21,27 @@ interface Props {
 }
 
 const { product, headingLevel: Heading = 'h3', active = false, index } = Astro.props;
-const { code, name, category, capacityMl, price, image, imageAlt } = product.data;
+const locale = getLocale(Astro.url);
+const { code, category, capacityMl, image } = product.data;
 ---
 
 <article class:list={['card', { 'is-active': active }]} data-card={index}>
   <div class="card__media">
-    <Image src={image} alt={imageAlt} width={400} height={400} fit="cover" />
+    <Image src={image} alt={productAlt(product, locale)} width={400} height={400} fit="cover" />
   </div>
   <Heading class="card__name">
-    <a href={productPath(product)} class="card__link">{name}</a>
+    <a href={productPath(product, locale)} class="card__link">{productName(product, locale)}</a>
   </Heading>
-  <p class="card__meta">{code} · {formatCapacity(capacityMl)} · {categories[category].label}</p>
+  <p class="card__meta">{code} · {capacityMl ? formatCapacity(capacityMl) : categoryInfo[locale][category].label}</p>
   <div class="card__foot">
-    <span class="card__price">{formatPrice(price)}</span>
+    <span class:list={['card__price', { 'price-ask': !product.data.price }]}>{priceLabel(product, locale)}</span>
     <span class="card__actions">
       <a
-        href={productWhatsappLink(product)}
+        href={productWhatsappLink(product, locale)}
         class="icon-btn card__wa"
         target="_blank"
         rel="noopener"
-        aria-label={`Pesan ${code} via WhatsApp`}
+        aria-label={t(locale).orderAria(code)}
       >
         <Icon name="bag" size={15} />
       </a>
@@ -60,7 +69,7 @@ const { code, name, category, capacityMl, price, image, imageAlt } = product.dat
   }
 
   .card.is-active {
-    background: #4a4a4f;
+    background: var(--surface-active);
   }
 
   .card__media {
@@ -78,10 +87,11 @@ const { code, name, category, capacityMl, price, image, imageAlt } = product.dat
   }
 
   .card__name {
-    font-size: 0.92rem;
-    font-weight: 800;
+    font-size: 0.85rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
     margin: 0;
   }
 
@@ -98,7 +108,7 @@ const { code, name, category, capacityMl, price, image, imageAlt } = product.dat
   }
 
   .card__meta {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     color: var(--muted);
     margin: 0;
   }
@@ -114,8 +124,8 @@ const { code, name, category, capacityMl, price, image, imageAlt } = product.dat
 
   .card__price {
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.05rem;
+    font-weight: 600;
+    font-size: 1.1rem;
     color: var(--accent);
     white-space: nowrap;
   }

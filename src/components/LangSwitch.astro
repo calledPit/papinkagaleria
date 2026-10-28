@@ -1,0 +1,64 @@
+---
+import { getLocale, localeMeta, locales, t } from '../i18n';
+
+interface Props {
+  /** Alamat halaman yang sama dalam bahasa lain. */
+  href: string;
+  vertical?: boolean;
+}
+
+const { href, vertical = false } = Astro.props;
+const locale = getLocale(Astro.url);
+---
+
+<nav class:list={['lang', { 'lang--vertical': vertical }]} aria-label={t(locale).switchLang}>
+  {
+    locales.map((l) =>
+      l === locale ? (
+        <span class="lang__item is-current" aria-current="true">
+          {localeMeta[l].label}
+        </span>
+      ) : (
+        <a class="lang__item" href={href} hreflang={localeMeta[l].htmlLang} lang={localeMeta[l].htmlLang} title={localeMeta[l].name}>
+          {localeMeta[l].label}
+        </a>
+      ),
+    )
+  }
+</nav>
+
+<style>
+  .lang {
+    display: inline-flex;
+    padding: 3px;
+    gap: 2px;
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .lang--vertical {
+    flex-direction: column;
+  }
+
+  .lang__item {
+    display: grid;
+    place-items: center;
+    min-width: 32px;
+    height: 28px;
+    padding: 0 6px;
+    border-radius: 999px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  a.lang__item:hover {
+    color: var(--text);
+  }
+
+  .lang__item.is-current {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+</style>

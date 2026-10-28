@@ -1,51 +1,39 @@
 /**
  * Pengaturan utama website Papinka Galeria.
- * Ubah nilai di file ini untuk mengganti nomor WhatsApp, template pesan, dan info toko.
+ * Ubah nilai di file ini untuk mengganti nomor WhatsApp, template pesan, dan media sosial.
+ * Teks antarmuka & nama kategori per bahasa ada di src/i18n/index.ts.
  */
 export const site = {
   name: 'Papinka Galeria',
   url: 'https://papinkagaleria.com',
-  tagline: 'Mug & Tumbler Custom',
-  description:
-    'Papinka Galeria menyediakan mug dan tumbler custom: grafir logo, nama, dan full print. Cocok untuk hadiah, komunitas, dan souvenir perusahaan.',
-  customNote: 'Untuk produk custom, harga menyesuaikan desain dan spesifikasi pesanan.',
 
   whatsapp: {
     /** Format internasional tanpa "+", spasi, atau tanda hubung. Contoh: 6281234567890 */
     number: '6281237397796',
 
-    /** Label tombol WhatsApp. */
-    label: 'Pesan via WhatsApp',
-
-    /** Pesan untuk tombol WhatsApp umum (header, beranda, footer). */
-    generalMessage: 'Halo Papinka Galeria, saya ingin bertanya tentang mug/tumbler custom.',
-
     /**
-     * Pesan untuk tombol di halaman produk.
-     * Placeholder yang tersedia: {code} {name} {capacity} {price} {url}
+     * Template pesan per bahasa.
+     * - general: tombol WhatsApp umum (sidebar, topbar, halaman Cara Pesan)
+     * - product: tombol di kartu & halaman produk. Placeholder: {code} {name} {capacity} {price} {url}
      */
-    productMessage:
-      'Halo Papinka Galeria, saya tertarik dengan {code} - {name} ({capacity}, {price}).\n{url}\n\nBoleh info lebih lanjut?',
+    messages: {
+      id: {
+        general: 'Halo Papinka Galeria, saya ingin bertanya tentang souvenir custom.',
+        product: 'Halo Papinka Galeria, saya tertarik dengan {code} - {name}.\n{url}\n\nBoleh info harga dan detailnya?',
+      },
+      en: {
+        general: 'Hello Papinka Galeria, I would like to ask about custom souvenirs.',
+        product: "Hello Papinka Galeria, I'm interested in {code} - {name}.\n{url}\n\nCould you share the price and details?",
+      },
+    },
   },
 
   social: {
-    instagram: '',
+    instagram: 'https://www.instagram.com/papinka_galeria',
+    instagramHandle: '@papinka_galeria',
   },
 } as const;
 
-export type Category = 'mug' | 'tumbler';
-
-export const categories: Record<Category, { label: string; title: string; description: string }> = {
-  mug: {
-    label: 'Mug',
-    title: 'Mug Custom',
-    description:
-      'Pilihan mug custom 350ml dari Papinka Galeria: mug bertutup dengan logo, motif kayu, mug enamel, hingga full print dengan gagang rajut.',
-  },
-  tumbler: {
-    label: 'Tumbler',
-    title: 'Tumbler Custom',
-    description:
-      'Tumbler custom 300–500ml dari Papinka Galeria, termasuk tumbler dengan grafir logo untuk souvenir perusahaan dan hadiah.',
-  },
-};
+/** Urutan di sini menentukan urutan tampil kategori di katalog. */
+export const categoryKeys = ['mug', 'tumbler', 'totebag', 'kerajinan', 'buku'] as const;
+export type Category = (typeof categoryKeys)[number];

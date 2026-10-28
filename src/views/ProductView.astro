@@ -1,0 +1,169 @@
+---
+import { getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ProductPanel from '../components/ProductPanel.astro';
+import { site } from '../config/site';
+import { categoryInfo, getLocale, locales, paths, t } from '../i18n';
+import {
+  getProducts,
+  priceLabel,
+  productDescription,
+  productName,
+  productPath,
+  type Product,
+} from '../lib/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const locale = getLocale(Astro.url);
+const ui = t(locale);
+const { code, category, capacityMl, price, image } = product.data;
+const info = categoryInfo[locale][category];
+const name = productName(product, locale);
+const body = productDescription(product, locale);
+const { Content } = await render(product);
+const related = (await getProducts(category)).filter((p) => p.id !== product.id);
+
+const capacityText = capacityMl ? ` ${capacityMl}ml` : '';
+const title = `${name}${capacityText} (${code})`;
+const pricePart = price ? `, ${ui.priceFrom(priceLabel(product, locale))}` : '';
+const fullDescription = `${name}${capacityText} ${ui.from} ${site.name}${pricePart}. ${body}`;
+const description =
+  fullDescription.length <= 160 ? fullDescription : `${fullDescription.slice(0, 157).replace(/\s+\S*$/, '')}...`;
+
+const ogImage = await getImage({ src: image, width: 1200, height: 1200, fit: 'cover', format: 'jpg' });
+const alternates = Object.fromEntries(locales.map((l) => [l, productPath(product, l)]));
+
+// Google mensyaratkan Product punya offers; produk tanpa harga cukup tercantum di ItemList katalog.
+const productSchema = price
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name,
+      sku: product.id,
+      mpn: code,
+      image: new URL(ogImage.src, site.url).href,
+      description: body,
+      category: info.title,
+      brand: { '@type': 'Brand', name: site.name },
+      offers: {
+        '@type': 'Offer',
+        url: new URL(productPath(product, locale), site.url).href,
+        priceCurrency: 'IDR',
+        price,
+        availability: 'https://schema.org/InStock',
+        seller: { '@id': `${site.url}/#organization` },
+      },
+    }
+  : undefined;
+---
+
+<Base title={title} description={description} image={ogImage.src} jsonLd={productSchema} alternates={alternates}>
+  <section class="detail">
+    <div class="detail__main">
+      <Breadcrumbs
+        items={[
+          { label: ui.products, href: paths.catalog(locale) },
+          { label: info.label, href: paths.category(locale, category) },
+          { label: name, href: productPath(product, locale) },
+        ]}
+      />
+
+      <h1 class="display">{name}</h1>
+      <div class="detail__desc">
+        {locale === 'id' ? <Content /> : <p>{body}</p>}
+      </div>
+
+      <p class="detail__note">{ui.customNote}</p>
+
+      {
+        related.length > 0 && (
+          <div class="related">
+            <div class="section-head">
+              <h2>{ui.more(info.label)}</h2>
+              <a href={paths.category(locale, category)} class="text-link">
+                {ui.viewAll}
+              </a>
+            </div>
+            <div class="related__row">
+              {related.map((p) => (
+                <ProductCard product={p} />
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <ProductPanel product={product} showTitle={false} showDescription={false} closeHref={paths.category(locale, category)} />
+  </section>
+</Base>
+
+<style>
+  .detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(400px, 38vw, 680px);
+    min-height: calc(100vh - var(--topbar-h));
+  }
+
+  .detail__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(28px, 5vw, 56px) var(--gutter) 48px;
+    min-width: 0;
+  }
+
+  .detail .display {
+    font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+    max-width: 18ch;
+  }
+
+  .detail__desc {
+    max-width: 60ch;
+    color: var(--muted);
+  }
+
+  .detail__note {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .related {
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+
+  .related h2 {
+    font-size: 1.1rem;
+  }
+
+  .related__row {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-2) transparent;
+  }
+
+  .related__row > :global(.card) {
+    flex: 0 0 200px;
+  }
+
+  @media (max-width: 1099px) {
+    .detail {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .detail > :global(.panel) {
+      order: -1;
+    }
+  }
+</style>

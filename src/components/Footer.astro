@@ -1,82 +1,61 @@
 ---
 import { site } from '../config/site';
-import { whatsappLink } from '../lib/products';
+import { getCollection } from 'astro:content';
+import { getLocale, paths, t } from '../i18n';
 
+const locale = getLocale(Astro.url);
+const areas = (await getCollection('area')).sort((a, b) => a.data.order - b.data.order);
+const ui = t(locale);
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="container footer__inner">
-    <div>
-      <p class="footer__brand">{site.name}</p>
-      <p class="footer__text">{site.description}</p>
-    </div>
-    <nav aria-label="Navigasi footer" class="footer__links">
-      <a href="/produk/mug/">Mug Custom</a>
-      <a href="/produk/tumbler/">Tumbler Custom</a>
-      <a href="/#cara-pesan">Cara Pesan</a>
-      <a href={whatsappLink()} target="_blank" rel="noopener">WhatsApp</a>
-      {site.social.instagram && <a href={site.social.instagram} target="_blank" rel="noopener">Instagram</a>}
-    </nav>
+  <div class="footer__areas">
+    <span>{ui.serviceArea}:</span>
+    {areas.map((a) => <a href={`/${a.data.slug}/`}>Souvenir {a.data.area}</a>)}
   </div>
-  <div class="container footer__bottom">
-    <small>&copy; {year} {site.name} · papinkagaleria.com</small>
-  </div>
+  <small>&copy; {year} {site.name}</small>
+  <nav aria-label={ui.navFooter}>
+    <a href={paths.catalog(locale)}>{ui.catalog}</a>
+    <a href={paths.howTo(locale)}>{ui.howTo}</a>
+    <a href={paths.blog(locale)}>{ui.blog}</a>
+    <a href={site.social.instagram} target="_blank" rel="noopener">Instagram {site.social.instagramHandle}</a>
+  </nav>
 </footer>
 
 <style>
   .footer {
-    border-top: 1px solid var(--line);
-    padding-block: 48px 24px;
-  }
-
-  .footer__inner {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-  }
-
-  .footer__brand {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer__text {
-    max-width: 52ch;
-    color: var(--muted);
-  }
-
-  .footer__links {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-family: var(--font-display);
-    font-weight: 600;
-  }
-
-  .footer__links a {
-    text-decoration: none;
-    color: var(--muted);
-  }
-
-  .footer__links a:hover {
-    color: var(--accent);
-  }
-
-  .footer__bottom {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding: 20px var(--gutter);
     border-top: 1px solid var(--line);
-    margin-top: 2rem;
-    padding-top: 1.25rem;
     color: var(--muted);
+    font-size: 0.85rem;
   }
 
-  @media (max-width: 640px) {
-    .footer__inner {
-      grid-template-columns: 1fr;
-    }
+  .footer__areas {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .footer a {
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: var(--text);
   }
 </style>

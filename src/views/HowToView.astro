@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import { getLocale, locales, paths, t } from '../i18n';
+import { whatsappLink } from '../lib/products';
+
+const locale = getLocale(Astro.url);
+const ui = t(locale);
+const alternates = Object.fromEntries(locales.map((l) => [l, paths.howTo(l)]));
+
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: ui.howToTitle,
+  description: ui.howToDescription,
+  step: ui.steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.title, text: s.text })),
+};
+---
+
+<Base title={ui.howToTitle} description={ui.howToDescription} jsonLd={howTo} alternates={alternates}>
+  <section class="section">
+    <div class="container">
+      <h1 class="display">
+        <span class="line">{ui.howToLines[0]}</span>
+        <span class="line"><span class="hl">{ui.howToLines[1]}</span></span>
+      </h1>
+
+      <ol class="steps">
+        {
+          ui.steps.map((s, i) => (
+            <li>
+              <span class="steps__num">{String(i + 1).padStart(2, '0')}</span>
+              <h2>{s.title}</h2>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="custom">
+        <h2>{ui.customOptionsTitle}</h2>
+        <ul>{ui.customOptions.map((o) => <li>{o}</li>)}</ul>
+        <p>{ui.customNote}</p>
+      </div>
+
+      <a href={whatsappLink(locale)} class="btn btn--accent" target="_blank" rel="noopener">
+        <WhatsAppIcon size={16} />
+        {ui.orderLabel}
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: clamp(24px, 4vw, 48px) 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .steps li {
+    padding-top: 1rem;
+    border-top: 1px solid var(--surface-2);
+  }
+
+  .steps__num {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .steps h2,
+  .custom h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: none;
+    margin-bottom: 0.35rem;
+  }
+
+  .steps p,
+  .custom p {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .custom {
+    margin-bottom: 2rem;
+  }
+
+  .custom ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .custom li {
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 900px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

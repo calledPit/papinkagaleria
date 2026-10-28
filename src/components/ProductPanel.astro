@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { site } from '../config/site';
+import { getLocale, t } from '../i18n';
 import { PANEL_IMAGE_SIZE, panelData, type Product } from '../lib/products';
 
 interface Props {
@@ -9,18 +9,21 @@ interface Props {
   interactive?: boolean;
   /** Jika diisi, tombol X tampil dan mengarah ke URL ini. */
   closeHref?: string;
+  /** Halaman detail sudah punya judul sendiri, jadi judul & deskripsi panel bisa disembunyikan. */
+  showTitle?: boolean;
   showDescription?: boolean;
-  titleTag?: 'h2' | 'p';
 }
 
-const { product, interactive = false, closeHref, showDescription = true, titleTag: Title = 'h2' } = Astro.props;
-const d = await panelData(product);
+const { product, interactive = false, closeHref, showTitle = true, showDescription = true } = Astro.props;
+const locale = getLocale(Astro.url);
+const ui = t(locale);
+const d = await panelData(product, locale);
 ---
 
-<aside class="panel" data-panel aria-label="Detail produk">
+<aside class:list={['panel', { 'panel--compact': !showTitle }]} data-panel aria-label={ui.productDetail}>
   {
     closeHref && (
-      <a href={closeHref} class="panel__close" aria-label="Kembali ke katalog">
+      <a href={closeHref} class="panel__close" aria-label={ui.backToCatalog}>
         <Icon name="close" />
       </a>
     )
@@ -30,14 +33,13 @@ const d = await panelData(product);
     <div class="panel__img">
       <img data-p="img" src={d.img} alt={d.alt} width={PANEL_IMAGE_SIZE} height={PANEL_IMAGE_SIZE} />
     </div>
-    <div class="panel__pedestal" aria-hidden="true"></div>
     {
       interactive && (
         <div class="panel__nav">
-          <button type="button" data-p="prev" aria-label="Produk sebelumnya">
+          <button type="button" data-p="prev" aria-label={ui.prev}>
             <Icon name="prev" size={14} />
           </button>
-          <button type="button" data-p="next" aria-label="Produk berikutnya">
+          <button type="button" data-p="next" aria-label={ui.next}>
             <Icon name="next" size={14} />
           </button>
         </div>
@@ -45,16 +47,18 @@ const d = await panelData(product);
     }
   </div>
 
-  <p class="panel__code" data-p="code">{d.code}</p>
-  <Title class="panel__title">
-    <span data-p="name">{d.name}</span>{' '}
-    <small data-p="capacity">({d.capacity})</small>
-  </Title>
+  {
+    showTitle && (
+      <h2 class="panel__title">
+        <span data-p="name">{d.name}</span> <small data-p="code">({d.code})</small>
+      </h2>
+    )
+  }
 
   <ul class="features">
     <li>
       <span class="features__icon"><Icon name="ruler" /></span>
-      <span data-p="capacity-label">{d.capacity}</span>
+      <span data-p="size">{d.size}</span>
     </li>
     <li>
       <span class="features__icon"><Icon name="sparkle" /></span>
@@ -71,7 +75,7 @@ const d = await panelData(product);
       <p class="panel__desc">
         <span data-p="desc">{d.desc}</span>{' '}
         <a href={d.url} data-p="url">
-          Selengkapnya
+          {ui.readMore}
         </a>
       </p>
     )
@@ -79,8 +83,8 @@ const d = await panelData(product);
 
   <a href={d.wa} data-p="wa" class="order" target="_blank" rel="noopener">
     <span class="order__icon"><Icon name="bag" size={16} /></span>
-    <span class="order__label">{site.whatsapp.label}</span>
-    <span class="order__price" data-p="price">{d.price}</span>
+    <span class="order__label">{ui.orderLabel}</span>
+    <span class:list={['order__price', { 'price-ask': !product.data.price }]} data-p="price">{d.price}</span>
   </a>
 </aside>
 
@@ -125,7 +129,6 @@ const d = await panelData(product);
     margin-inline: auto;
     border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 24px 40px -18px rgb(0 0 0 / 0.45);
   }
 
   .panel__img img {
@@ -134,17 +137,6 @@ const d = await panelData(product);
     object-fit: cover;
   }
 
-  /* Alas melingkar di bawah foto, seperti di referensi */
-  .panel__pedestal {
-    position: absolute;
-    left: 6%;
-    right: 6%;
-    bottom: 10px;
-    height: 70px;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at center, #f1efeb 0%, #e6e3de 55%, #cfcbc5 100%);
-    box-shadow: inset 0 -6px 12px rgb(0 0 0 / 0.08);
-  }
 
   .panel__nav {
     position: absolute;
@@ -175,28 +167,19 @@ const d = await panelData(product);
     background: rgb(255 255 255 / 0.15);
   }
 
-  .panel__code {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: var(--panel-muted);
-    margin: 0 0 0.25rem;
-  }
-
   .panel__title {
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    font-weight: 800;
-    line-height: 1.2;
+    font-size: clamp(1.15rem, 1.5vw, 1.6rem);
+    font-weight: 600;
+    line-height: 1.3;
     text-transform: uppercase;
     margin: 0 0 1.25rem;
   }
 
   .panel__title small {
-    font-size: 0.6em;
-    font-weight: 600;
-    text-transform: none;
+    font-size: 0.62em;
+    font-weight: 400;
+    white-space: nowrap;
     color: var(--panel-muted);
   }
 
@@ -208,8 +191,8 @@ const d = await panelData(product);
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     text-align: center;
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 500;
   }
 
   .features li {
@@ -237,7 +220,7 @@ const d = await panelData(product);
 
   .panel__desc a {
     color: var(--panel-ink);
-    font-weight: 700;
+    font-weight: 500;
   }
 
   .order {
@@ -271,15 +254,15 @@ const d = await panelData(product);
 
   .order__label {
     flex: 1;
-    font-weight: 700;
-    font-size: 0.82rem;
-    letter-spacing: 0.04em;
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
   }
 
   .order__price {
-    font-weight: 900;
-    font-size: 1.2rem;
+    font-weight: 600;
+    font-size: 1.15rem;
     color: var(--accent);
     white-space: nowrap;
   }
@@ -292,7 +275,7 @@ const d = await panelData(product);
       align-self: start;
       height: 100vh;
       margin-top: calc(-1 * var(--topbar-h));
-      padding-top: calc(var(--topbar-h) + 8px);
+      padding: calc(var(--topbar-h) + 24px) clamp(28px, 3.2vw, 56px) clamp(24px, 3vh, 40px);
       overflow-y: auto;
       scrollbar-width: none;
     }
@@ -301,8 +284,26 @@ const d = await panelData(product);
       top: calc(var(--topbar-h) + 4px);
     }
 
+    /* Isi panel di tengah secara vertikal, bar pesan tetap di bawah (margin-top: auto pada .order) */
+    .panel__stage {
+      margin-top: auto;
+    }
+
     .panel__img {
-      max-width: min(320px, 34vh);
+      max-width: min(440px, 42vh);
+    }
+
+    .order {
+      margin-top: clamp(24px, 4vh, 48px);
+    }
+
+    .panel > :nth-last-child(2) {
+      margin-bottom: auto;
+    }
+
+    /* Halaman detail (tanpa judul & deskripsi): foto lebih besar */
+    .panel--compact .panel__img {
+      max-width: min(500px, 52vh);
     }
   }
 

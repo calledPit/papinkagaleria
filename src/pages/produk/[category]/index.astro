@@ -1,25 +1,16 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import CatalogPage from '../../../components/CatalogPage.astro';
-import { categories, type Category } from '../../../config/site';
-import { getProducts } from '../../../lib/products';
+import CatalogView from '../../../views/CatalogView.astro';
+import { categoryKeys, type Category } from '../../../config/site';
+import { categoryInfo } from '../../../i18n';
 
 export const getStaticPaths = (() =>
-  (Object.keys(categories) as Category[]).map((category) => ({ params: { category } }))) satisfies GetStaticPaths;
+  categoryKeys.map((category) => ({
+    params: { category: categoryInfo.id[category].slug },
+    props: { category },
+  }))) satisfies GetStaticPaths;
 
-const category = Astro.params.category as Category;
-const info = categories[category];
-const products = await getProducts(category);
+const { category } = Astro.props as { category: Category };
 ---
 
-<CatalogPage
-  title={`${info.title} - Harga & Pilihan`}
-  heading="Koleksi"
-  highlight={info.title}
-  description={info.description}
-  crumbs={[
-    { label: 'Produk', href: '/produk/' },
-    { label: info.label, href: `/produk/${category}/` },
-  ]}
-  products={products}
-/>
+<CatalogView category={category} />

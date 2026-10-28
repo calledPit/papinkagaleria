@@ -1,5 +1,6 @@
 ---
 import { site } from '../config/site';
+import { getLocale, paths, t } from '../i18n';
 
 export interface Crumb {
   label: string;
@@ -11,7 +12,8 @@ interface Props {
 }
 
 const { items } = Astro.props;
-const all = [{ label: 'Beranda', href: '/' }, ...items];
+const locale = getLocale(Astro.url);
+const all = [{ label: t(locale).home, href: paths.home(locale) }, ...items];
 
 const schema = {
   '@context': 'https://schema.org',

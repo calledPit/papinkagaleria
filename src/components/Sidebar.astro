@@ -1,27 +1,40 @@
 ---
+import { Image } from 'astro:assets';
 import Icon, { type IconName } from './Icon.astro';
 import WhatsAppIcon from './WhatsAppIcon.astro';
+import LangSwitch from './LangSwitch.astro';
+import logoMark from '../assets/logo-mark.png';
+import { site } from '../config/site';
+import { getLocale, paths, t } from '../i18n';
 import { whatsappLink } from '../lib/products';
 
+interface Props {
+  switchHref: string;
+}
+
+const { switchHref } = Astro.props;
+const locale = getLocale(Astro.url);
+const ui = t(locale);
 const nav: { href: string; label: string; icon: IconName }[] = [
-  { href: '/', label: 'Beranda', icon: 'home' },
-  { href: '/produk/', label: 'Katalog', icon: 'grid' },
-  { href: '/produk/mug/', label: 'Mug', icon: 'mug' },
-  { href: '/produk/tumbler/', label: 'Tumbler', icon: 'bottle' },
-  { href: '/#cara-pesan', label: 'Cara Pesan', icon: 'steps' },
+  { href: paths.home(locale), label: ui.home, icon: 'home' },
+  { href: paths.catalog(locale), label: ui.catalog, icon: 'grid' },
+  { href: paths.howTo(locale), label: ui.howTo, icon: 'steps' },
+  { href: paths.blog(locale), label: ui.blog, icon: 'book' },
 ];
 const current = Astro.url.pathname;
 ---
 
 <aside class="rail">
-  <a href="/" class="rail__logo" aria-label="Papinka Galeria - Beranda">P</a>
-  <nav aria-label="Navigasi utama" class="rail__nav">
+  <a href={paths.home(locale)} class="rail__logo" aria-label={`${site.name} - ${ui.home}`}>
+    <Image src={logoMark} alt="" width={88} height={88} loading="eager" />
+  </a>
+  <nav aria-label={ui.navMain} class="rail__nav">
     {
       nav.map((item) => (
         <a
           href={item.href}
           title={item.label}
-          aria-current={current === item.href ? 'page' : undefined}
+          aria-current={current === item.href || (item.icon === 'book' && current.startsWith(item.href)) ? 'page' : undefined}
           class="rail__item"
         >
           <Icon name={item.icon} />
@@ -30,10 +43,17 @@ const current = Astro.url.pathname;
       ))
     }
   </nav>
-  <a href={whatsappLink()} class="rail__wa" target="_blank" rel="noopener" title="Chat WhatsApp">
-    <WhatsAppIcon size={20} />
-    <span class="sr-only">Chat WhatsApp</span>
-  </a>
+  <div class="rail__social">
+    <LangSwitch href={switchHref} vertical />
+    <a href={site.social.instagram} class="rail__wa" target="_blank" rel="noopener" title={`Instagram ${site.social.instagramHandle}`}>
+      <Icon name="instagram" />
+      <span class="sr-only">Instagram</span>
+    </a>
+    <a href={whatsappLink(locale)} class="rail__wa" target="_blank" rel="noopener" title={ui.chat}>
+      <WhatsAppIcon size={20} />
+      <span class="sr-only">{ui.chat}</span>
+    </a>
+  </div>
 </aside>
 
 <style>
@@ -52,17 +72,18 @@ const current = Astro.url.pathname;
   }
 
   .rail__logo {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
+    display: block;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 1.3rem;
-    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .rail__social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   .rail__nav {
@@ -144,7 +165,7 @@ const current = Astro.url.pathname;
     }
 
     .rail__logo,
-    .rail__wa {
+    .rail__social {
       display: none;
     }
 

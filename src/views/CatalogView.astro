@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Breadcrumbs, { type Crumb } from '../components/Breadcrumbs.astro';
+import { categoryKeys, site, type Category } from '../config/site';
+import { categoryInfo, getLocale, locales, paths, t } from '../i18n';
+import { getProducts, priceLabel, productName, productPath } from '../lib/products';
+
+interface Props {
+  /** Kosong = semua produk. */
+  category?: Category;
+}
+
+const { category } = Astro.props;
+const locale = getLocale(Astro.url);
+const ui = t(locale);
+const info = category && categoryInfo[locale][category];
+const products = await getProducts(category);
+
+const title = info ? `${info.title} - ${ui.categoryTitleSuffix}` : ui.catalogTitle;
+const heading = info ? ui.collection : ui.catalogHeading;
+const highlight = info ? info.title : ui.catalogHighlight;
+const description = info ? info.description : ui.catalogDescription;
+const crumbs: Crumb[] = [
+  { label: ui.products, href: paths.catalog(locale) },
+  ...(category && info ? [{ label: info.label, href: paths.category(locale, category) }] : []),
+];
+const alternates = Object.fromEntries(
+  locales.map((l) => [l, category ? paths.category(l, category) : paths.catalog(l)]),
+);
+
+const current = Astro.url.pathname;
+const filters = [
+  { href: paths.catalog(locale), label: ui.all },
+  ...categoryKeys.map((c) => ({ href: paths.category(locale, c), label: categoryInfo[locale][c].label })),
+];
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${heading} ${highlight}`,
+  itemListElement: products.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: new URL(productPath(p, locale), site.url).href,
+    name: `${productName(p, locale)} (${p.data.code}) - ${priceLabel(p, locale)}`,
+  })),
+};
+---
+
+<Base title={title} description={description} jsonLd={itemList} alternates={alternates}>
+  <section class="section catalog">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="display">
+        <span class="line">{heading}</span>
+        <span class="line"><span class="hl">{highlight}</span></span>
+      </h1>
+      <p class="lead">{description}</p>
+
+      <nav class="chips" aria-label={ui.filterLabel}>
+        {
+          filters.map((f) => (
+            <a href={f.href} aria-current={current === f.href ? 'page' : undefined}>
+              {f.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="product-grid">
+        {products.map((p) => <ProductCard product={p} headingLevel="h2" />)}
+      </div>
+
+      <p class="note">{ui.customNote}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .catalog {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .catalog .display {
+    font-size: clamp(1.8rem, 3.8vw, 2.8rem);
+  }
+
+  .chips {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .note {
+    margin: 2.5rem 0 0;
+    text-align: center;
+    color: var(--muted);
+  }
+</style>

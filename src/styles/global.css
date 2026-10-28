@@ -4,11 +4,12 @@
   --bg-rail: #161617;
   --surface: #28282b;
   --surface-2: #36363a;
+  --surface-active: #4a4a4f;
   --line: rgb(255 255 255 / 0.08);
   --text: #f4f2ef;
   --muted: #9d9a95;
 
-  /* Warna aksen brand (ganti di sini, misal #f5e663 untuk kuning seperti referensi) */
+  /* Warna aksen brand */
   --accent: #ef7d3c;
   --accent-ink: #1d1d1f;
 
@@ -23,7 +24,10 @@
   --radius: 18px;
   --radius-sm: 12px;
   --rail-w: 76px;
-  --topbar-h: 64px;
+  --topbar-h: 0px;
+
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
   --container: 1180px;
   --gutter: clamp(16px, 4vw, 48px);
 }
@@ -44,8 +48,8 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.65;
 }
 
 img {
@@ -62,7 +66,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.1;
   margin: 0 0 0.5em;
   text-wrap: balance;
@@ -94,11 +98,11 @@ p {
 
 /* Judul besar bergaya referensi: huruf kapital tebal, satu baris di-highlight */
 .display {
-  font-size: clamp(2.1rem, 5.2vw, 4rem);
-  font-weight: 900;
-  line-height: 1.08;
+  font-size: clamp(2rem, 4.6vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.15;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
 }
 
 .display .line {
@@ -109,13 +113,13 @@ p {
   display: inline-block;
   background: var(--accent);
   color: var(--accent-ink);
-  padding: 0 0.18em;
-  border-radius: 6px;
+  padding: 0 0.2em;
+  border-radius: 4px;
 }
 
 .eyebrow {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -138,9 +142,9 @@ p {
   border-radius: var(--radius-sm);
   border: 0;
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
@@ -184,8 +188,14 @@ p {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(12px, 2.5vw, 24px);
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 2vw, 20px);
+}
+
+@media (max-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 900px) {
@@ -209,7 +219,7 @@ p {
 
 .text-link {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--accent);
   text-decoration: none;
 }
@@ -229,7 +239,7 @@ p {
   border-radius: 999px;
   background: var(--surface);
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.9rem;
   text-decoration: none;
   color: var(--muted);
@@ -242,6 +252,97 @@ p {
 .chips a[aria-current='page'] {
   background: var(--accent);
   color: var(--accent-ink);
+}
+
+@media (max-width: 760px) {
+  .chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .chips a {
+    white-space: nowrap;
+  }
+}
+
+/* Produk tanpa harga tetap: tampil lebih kalem dari harga asli */
+.price-ask {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+}
+
+/* Teks panjang dari Markdown (artikel blog, halaman area) */
+.prose {
+  font-size: 1.02rem;
+  line-height: 1.8;
+  max-width: 68ch;
+}
+
+.prose h2 {
+  font-size: 1.4rem;
+  text-transform: none;
+  margin: 2.2rem 0 0.8rem;
+}
+
+.prose h3 {
+  font-size: 1.1rem;
+  margin: 1.6rem 0 0.5rem;
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin: 0 0 1.1rem;
+}
+
+.prose li {
+  margin-bottom: 0.4rem;
+}
+
+.prose strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--accent);
+}
+
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.4rem;
+  font-size: 0.92rem;
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.prose th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+  }
 }
 
 :focus-visible {
@@ -269,6 +370,13 @@ p {
   padding: 0.5rem 1rem;
   background: var(--accent);
   color: var(--accent-ink);
+}
+
+/* Topbar hanya tampil di HP; di desktop identitas cukup lewat logo di sidebar */
+@media (max-width: 760px) {
+  :root {
+    --topbar-h: 56px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

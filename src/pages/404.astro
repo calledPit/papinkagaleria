@@ -1,14 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
+import { paths, t } from '../i18n';
+
+const id = t('id');
+const en = t('en');
 ---
 
-<Base title="Halaman tidak ditemukan" noindex>
+<Base title={`${id.notFoundTitle} / ${en.notFoundTitle}`} noindex>
   <section class="section">
     <div class="container notfound">
       <p class="eyebrow">404</p>
-      <h1 class="display"><span class="line">Halaman</span><span class="line"><span class="hl">tidak ditemukan</span></span></h1>
-      <p class="lead">Halaman yang Anda cari mungkin sudah dipindah. Silakan lihat katalog kami.</p>
-      <a href="/produk/" class="btn btn--accent">Lihat Katalog</a>
+      <h1 class="display">
+        <span class="line">{id.notFoundLines[0]}</span>
+        <span class="line"><span class="hl">{id.notFoundLines[1]}</span></span>
+      </h1>
+      <p class="lead">{id.notFoundText}</p>
+      <p class="lead" lang="en">{en.notFoundText}</p>
+      <div class="notfound__actions">
+        <a href={paths.catalog('id')} class="btn btn--accent">{id.viewCatalog}</a>
+        <a href={paths.catalog('en')} class="btn btn--ghost" lang="en">{en.viewCatalog}</a>
+      </div>
     </div>
   </section>
 </Base>
@@ -19,5 +30,13 @@ import Base from '../layouts/Base.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
   }
 </style>

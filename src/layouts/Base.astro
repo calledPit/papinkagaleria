@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar.astro';
 import Topbar from '../components/Topbar.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../config/site';
+import { defaultLocale, getLocale, localeMeta, locales, otherLocale, paths, t, type Locale } from '../i18n';
 import '../styles/global.css';
 
 interface Props {
@@ -13,32 +14,47 @@ interface Props {
   image?: string;
   /** Satu atau beberapa objek schema.org untuk JSON-LD. */
   jsonLd?: object | object[];
+  /** Alamat halaman ini di tiap bahasa, untuk hreflang dan tombol ganti bahasa. */
+  alternates?: Partial<Record<Locale, string>>;
   noindex?: boolean;
 }
 
-const { title, description = site.description, image, jsonLd, noindex = false } = Astro.props;
+const locale = getLocale(Astro.url);
+const ui = t(locale);
+const { title, description = ui.description, image, jsonLd, alternates, noindex = false } = Astro.props;
 
-const fullTitle = title ? `${title} | ${site.name}` : `${site.name} · ${site.tagline}`;
-const canonical = new URL(Astro.url.pathname, site.url).href;
-const ogImage = image ? new URL(image, site.url).href : undefined;
+const abs = (path: string) => new URL(path, site.url).href;
+// Google memotong judul sekitar 60 karakter; judul panjang tidak perlu ditambah nama toko.
+const fullTitle = !title ? `${site.name} · ${ui.tagline}` : title.length > 42 ? title : `${title} | ${site.name}`;
+const canonical = abs(Astro.url.pathname);
+const ogImage = abs(image ?? '/og-image.jpg');
+const switchHref = alternates?.[otherLocale(locale)] ?? paths.home(otherLocale(locale));
 
 const organization = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${site.url}/#organization`,
   name: site.name,
   url: site.url,
+  logo: abs('/og-image.jpg'),
+  sameAs: [site.social.instagram],
+  areaServed: [
+    { '@type': 'City', name: 'Palembang' },
+    { '@type': 'State', name: 'Lampung' },
+    { '@type': 'State', name: 'Sumatera Selatan' },
+  ],
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: `+${site.whatsapp.number}`,
     contactType: 'customer service',
-    availableLanguage: ['Indonesian'],
+    availableLanguage: ['Indonesian', 'English'],
   },
 };
 const schemas = [organization, ...(jsonLd ? [jsonLd].flat() : [])];
 ---
 
 <!doctype html>
-<html lang="id">
+<html lang={localeMeta[locale].htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,30 +62,39 @@ const schemas = [organization, ...(jsonLd ? [jsonLd].flat() : [])];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {
+      !noindex &&
+        alternates &&
+        locales
+          .filter((l) => alternates[l])
+          .map((l) => <link rel="alternate" hreflang={localeMeta[l].htmlLang} href={abs(alternates[l]!)} />)
+    }
+    {!noindex && alternates?.[defaultLocale] && <link rel="alternate" hreflang="x-default" href={abs(alternates[defaultLocale]!)} />}
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#1d1d1f" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale" content={localeMeta[locale].ogLocale} />
+    {alternates?.[otherLocale(locale)] && <meta property="og:locale:alternate" content={localeMeta[otherLocale(locale)].ogLocale} />}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
 
-    <Font cssVariable="--font-display" preload />
-    <Font cssVariable="--font-body" />
+    <Font cssVariable="--font-sans" preload />
 
     {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body>
-    <a class="sr-only skip-link" href="#konten">Langsung ke konten</a>
+    <a class="sr-only skip-link" href="#konten">{ui.skip}</a>
     <div class="shell">
-      <Sidebar />
+      <Sidebar switchHref={switchHref} />
       <div class="shell__main">
-        <Topbar />
+        <Topbar switchHref={switchHref} />
         <main id="konten">
           <slot />
         </main>

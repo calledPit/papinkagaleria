@@ -11,21 +11,12 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.google(),
-      name: 'Archivo',
-      cssVariable: '--font-display',
-      weights: ['500 900'],
+      name: 'Poppins',
+      cssVariable: '--font-sans',
+      weights: [400, 500, 600],
       styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['Arial', 'sans-serif'],
-    },
-    {
-      provider: fontProviders.google(),
-      name: 'DM Sans',
-      cssVariable: '--font-body',
-      weights: ['400 700'],
-      styles: ['normal'],
-      subsets: ['latin'],
-      fallbacks: ['sans-serif'],
     },
   ],
 });

@@ -1,0 +1,213 @@
+---
+import type { Page } from 'astro';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { site } from '../config/site';
+import { getLocale, locales, paths, t } from '../i18n';
+import { blogPagePath, formatDate, postPath, type Post } from '../lib/blog';
+
+interface Props {
+  page: Page<Post>;
+}
+
+const { page } = Astro.props;
+const locale = getLocale(Astro.url);
+const ui = t(locale);
+const posts = page.data;
+const n = page.currentPage;
+const alternates = Object.fromEntries(locales.map((l) => [l, blogPagePath(l, n)]));
+const title = n > 1 ? `${ui.blogTitle} - ${ui.pageLabel(n)}` : ui.blogTitle;
+const crumbs = [
+  { label: ui.blog, href: paths.blog(locale) },
+  ...(n > 1 ? [{ label: ui.pageLabel(n), href: blogPagePath(locale, n) }] : []),
+];
+
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: ui.blogTitle,
+  url: new URL(paths.blog(locale), site.url).href,
+  publisher: { '@id': `${site.url}/#organization` },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    url: new URL(postPath(p), site.url).href,
+    datePublished: p.data.date.toISOString(),
+  })),
+};
+---
+
+<Base title={title} description={ui.blogDescription} jsonLd={blogSchema} alternates={alternates}>
+  <section class="section">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="display">
+        <span class="line">{ui.blogLines[0]}</span>
+        <span class="line"><span class="hl">{ui.blogLines[1]}</span></span>
+      </h1>
+      <p class="lead">{ui.blogDescription}</p>
+
+      <div class="posts">
+        {
+          posts.map((p) => (
+            <article class="post">
+              <div class="post__cover">
+                <Image src={p.data.cover} alt={p.data.coverAlt} width={640} height={400} fit="cover" />
+              </div>
+              <div class="post__body">
+                <time datetime={p.data.date.toISOString()}>{formatDate(p.data.date, locale)}</time>
+                <h2>
+                  <a href={postPath(p)} class="post__link">
+                    {p.data.title}
+                  </a>
+                </h2>
+                <p>{p.data.description}</p>
+                <span class="text-link" aria-hidden="true">
+                  {ui.readArticle} →
+                </span>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      {
+        page.lastPage > 1 && (
+          <nav class="pager" aria-label={ui.pagination}>
+            {page.url.prev ? <a href={page.url.prev} rel="prev">{ui.prevPage}</a> : <span />}
+            <ol>
+              {Array.from({ length: page.lastPage }, (_, i) => i + 1).map((i) => (
+                <li>
+                  {i === n ? (
+                    <span aria-current="page">{i}</span>
+                  ) : (
+                    <a href={blogPagePath(locale, i)} aria-label={ui.pageLabel(i)}>
+                      {i}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ol>
+            {page.url.next ? <a href={page.url.next} rel="next">{ui.nextPage}</a> : <span />}
+          </nav>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lead {
+    margin-bottom: 2rem;
+  }
+
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(16px, 2.5vw, 24px);
+  }
+
+  .post {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: background-color 0.2s;
+  }
+
+  .post:hover {
+    background: var(--surface-2);
+  }
+
+  .post__cover {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .post__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post__body {
+    padding: 20px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .post time {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .post h2 {
+    font-size: 1.15rem;
+    text-transform: none;
+    margin: 0;
+  }
+
+  .post__link {
+    text-decoration: none;
+  }
+
+  /* Seluruh kartu bisa diklik lewat link judul */
+  .post__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .post p {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    font-weight: 500;
+  }
+
+  .pager a {
+    text-decoration: none;
+    color: var(--accent);
+  }
+
+  .pager ol {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pager ol a,
+  .pager ol span {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .pager ol span[aria-current] {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  @media (max-width: 760px) {
+    .posts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

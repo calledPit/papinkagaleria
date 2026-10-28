@@ -1,0 +1,16 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CatalogView from '../../../../views/CatalogView.astro';
+import { categoryKeys, type Category } from '../../../../config/site';
+import { categoryInfo } from '../../../../i18n';
+
+export const getStaticPaths = (() =>
+  categoryKeys.map((category) => ({
+    params: { category: categoryInfo.en[category].slug },
+    props: { category },
+  }))) satisfies GetStaticPaths;
+
+const { category } = Astro.props as { category: Category };
+---
+
+<CatalogView category={category} />
