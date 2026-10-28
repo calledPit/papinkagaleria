@@ -12,7 +12,7 @@ export const site = {
 
   whatsapp: {
     /** Format internasional tanpa "+", spasi, atau tanda hubung. Contoh: 6281234567890 */
-    number: '6281234567890',
+    number: '6281237397796',
 
     /** Label tombol WhatsApp. */
     label: 'Pesan via WhatsApp',
