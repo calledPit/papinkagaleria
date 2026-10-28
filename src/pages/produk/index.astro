@@ -1,0 +1,15 @@
+---
+import CatalogPage from '../../components/CatalogPage.astro';
+import { getProducts } from '../../lib/products';
+
+const products = await getProducts();
+---
+
+<CatalogPage
+  title="Katalog Mug & Tumbler Custom"
+  heading="Katalog"
+  highlight="Mug & Tumbler"
+  description="Daftar harga mug dan tumbler custom Papinka Galeria. Bisa grafir logo, nama, atau full print untuk hadiah dan souvenir perusahaan."
+  crumbs={[{ label: 'Produk', href: '/produk/' }]}
+  products={products}
+/>

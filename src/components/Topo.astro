@@ -1,0 +1,28 @@
+---
+/** Dekorasi garis kontur (seperti peta topografi) di latar belakang. */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg class:list={['topo', className]} viewBox="0 0 600 300" fill="none" aria-hidden="true">
+  <g stroke="currentColor" stroke-width="1.2">
+    <path d="M-20 260c60-40 120-30 170-60s70-90 140-90 110 60 170 60 100-40 160-30"></path>
+    <path d="M-20 280c70-30 130-20 180-45s80-80 140-80 100 55 160 55 110-35 160-25"></path>
+    <path d="M-20 300c80-25 140-10 190-30s90-70 140-70 90 50 150 50 120-30 160-20"></path>
+    <path d="M120 240c20-30 60-45 100-40s60 30 40 50-70 25-100 20-55-10-40-30z"></path>
+    <path d="M150 238c12-18 40-26 64-22s36 18 24 30-42 15-60 12-36-6-28-20z"></path>
+    <path d="M400 150c30-25 80-28 110-10s30 50 0 62-80 8-105-10-30-30-5-42z"></path>
+    <path d="M425 160c18-14 48-16 66-6s18 30 0 37-48 5-63-6-18-18-3-25z"></path>
+  </g>
+</svg>
+
+<style>
+  .topo {
+    position: absolute;
+    pointer-events: none;
+    color: var(--accent);
+    opacity: 0.35;
+  }
+</style>

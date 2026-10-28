@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CatalogPage from '../../../components/CatalogPage.astro';
+import { categories, type Category } from '../../../config/site';
+import { getProducts } from '../../../lib/products';
+
+export const getStaticPaths = (() =>
+  (Object.keys(categories) as Category[]).map((category) => ({ params: { category } }))) satisfies GetStaticPaths;
+
+const category = Astro.params.category as Category;
+const info = categories[category];
+const products = await getProducts(category);
+---
+
+<CatalogPage
+  title={`${info.title} - Harga & Pilihan`}
+  heading="Koleksi"
+  highlight={info.title}
+  description={info.description}
+  crumbs={[
+    { label: 'Produk', href: '/produk/' },
+    { label: info.label, href: `/produk/${category}/` },
+  ]}
+  products={products}
+/>

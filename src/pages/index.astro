@@ -1,0 +1,327 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ProductPanel from '../components/ProductPanel.astro';
+import Topo from '../components/Topo.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import { site } from '../config/site';
+import { getProducts, panelData, whatsappLink } from '../lib/products';
+
+const products = await getProducts();
+const panelItems = await Promise.all(products.map(panelData));
+
+const services: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'sparkle', title: 'Custom Logo', text: 'Cetak logo usaha, komunitas, atau acara Anda di mug dan tumbler.' },
+  { icon: 'tag', title: 'Grafir', text: 'Ukiran nama atau logo yang rapi. Beberapa tumbler sudah termasuk biaya grafir.' },
+  { icon: 'mug', title: 'Full Print', text: 'Desain penuh di seluruh permukaan mug, sesuai gambar pilihan Anda.' },
+  { icon: 'bottle', title: 'Gagang Rajut', text: 'Sentuhan handmade warna-warni yang membuat mug terasa lebih personal.' },
+];
+
+const steps = [
+  { title: 'Pilih produk', text: 'Lihat katalog dan catat kode produk yang Anda suka, misalnya MUG 001.' },
+  { title: 'Chat WhatsApp', text: 'Klik tombol pesan. Kode dan nama produk otomatis terisi di chat.' },
+  { title: 'Kirim desain', text: 'Kirim logo, nama, atau gambar yang ingin dicetak, beserta jumlah pesanan.' },
+  { title: 'Konfirmasi & produksi', text: 'Kami kirim penawaran harga dan detail pesanan, lalu pesanan diproses.' },
+];
+---
+
+<Base>
+  <section class="hero">
+    <div class="hero__main">
+      <h1 class="display">
+        <span class="line">Temukan</span>
+        <span class="line"><span class="hl">Mug & Tumbler</span></span>
+        <span class="line">Custom Untukmu</span>
+      </h1>
+
+      <div class="row" data-row>
+        {products.map((p, i) => <ProductCard product={p} index={i} active={i === 0} />)}
+      </div>
+
+      <div class="hero__about">
+        <p class="hero__tag">#SouvenirCustom</p>
+        <p class="lead">
+          Papinka Galeria menyediakan mug dan tumbler yang bisa dipersonalisasi untuk hadiah, merchandise komunitas,
+          hingga souvenir perusahaan. Tambahkan logo, nama, atau desain favorit Anda.
+        </p>
+        <a href="/produk/" class="btn btn--accent">Lihat Katalog</a>
+      </div>
+
+      <Topo class="hero__topo" />
+    </div>
+
+    <ProductPanel product={products[0]} interactive />
+  </section>
+
+  <section class="section" aria-labelledby="layanan">
+    <div class="container">
+      <p class="eyebrow">Layanan custom</p>
+      <h2 id="layanan">Buat jadi <span class="hl">milik Anda</span></h2>
+      <div class="services">
+        {
+          services.map((s) => (
+            <div class="service">
+              <span class="service__icon">
+                <Icon name={s.icon} size={22} />
+              </span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cara-pesan" aria-labelledby="judul-cara-pesan">
+    <div class="container">
+      <p class="eyebrow">Langkah pemesanan</p>
+      <h2 id="judul-cara-pesan">Cara Pesan</h2>
+      <ol class="steps">
+        {
+          steps.map((s, i) => (
+            <li class="step">
+              <span class="step__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <Topo class="cta__topo" />
+        <h2>Punya desain sendiri atau butuh untuk <span class="hl">acara kantor?</span></h2>
+        <p class="lead">{site.customNote} Ceritakan kebutuhan Anda, kami bantu carikan pilihan terbaik.</p>
+        <a href={whatsappLink()} class="btn btn--wa" target="_blank" rel="noopener">
+          <WhatsAppIcon size={18} />
+          {site.whatsapp.label}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/json" id="panel-data" set:html={JSON.stringify(panelItems)} />
+</Base>
+
+<script>
+  import type { PanelData } from '../lib/products';
+
+  const dataEl = document.getElementById('panel-data');
+  const panel = document.querySelector<HTMLElement>('[data-panel]');
+  const row = document.querySelector<HTMLElement>('[data-row]');
+
+  if (dataEl && panel && row) {
+    const items: PanelData[] = JSON.parse(dataEl.textContent ?? '[]');
+    const cards = [...row.querySelectorAll<HTMLElement>('[data-card]')];
+    const field = <T extends HTMLElement>(key: string) => panel.querySelector<T>(`[data-p="${key}"]`)!;
+    // Di layar lebar panel tampil di samping kartu, jadi klik kartu cukup mengganti isi panel.
+    const sideBySide = window.matchMedia('(min-width: 1100px)');
+    let current = 0;
+
+    const show = (index: number) => {
+      current = (index + items.length) % items.length;
+      const d = items[current];
+      const img = field<HTMLImageElement>('img');
+      img.src = d.img;
+      img.alt = d.alt;
+      field('code').textContent = d.code;
+      field('name').textContent = d.name;
+      field('capacity').textContent = `(${d.capacity})`;
+      field('capacity-label').textContent = d.capacity;
+      field('feature').textContent = d.feature;
+      field('category').textContent = d.category;
+      field('desc').textContent = d.desc;
+      field<HTMLAnchorElement>('url').href = d.url;
+      field<HTMLAnchorElement>('wa').href = d.wa;
+      field('price').textContent = d.price;
+
+      cards.forEach((card, i) => card.classList.toggle('is-active', i === current));
+      row.scrollTo({ left: cards[current].offsetLeft - 4, behavior: 'smooth' });
+    };
+
+    cards.forEach((card, i) =>
+      card.addEventListener('click', (event) => {
+        if (!sideBySide.matches || (event.target as Element).closest('.card__wa')) return;
+        event.preventDefault();
+        show(i);
+      }),
+    );
+    field('prev').addEventListener('click', () => show(current - 1));
+    field('next').addEventListener('click', () => show(current + 1));
+  }
+</script>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(360px, 32vw, 440px);
+    min-height: calc(100vh - var(--topbar-h));
+  }
+
+  .hero__main {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(28px, 5vw, 56px) var(--gutter) 40px;
+  }
+
+  .row {
+    position: relative;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 4px 4px 12px;
+    margin: clamp(16px, 3vw, 32px) -4px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-2) transparent;
+  }
+
+  .row > :global(.card) {
+    flex: 0 0 clamp(170px, 17vw, 220px);
+    scroll-snap-align: start;
+  }
+
+  .hero__about {
+    position: relative;
+    z-index: 1;
+    margin-top: clamp(24px, 4vw, 48px);
+    max-width: 520px;
+  }
+
+  .hero__tag {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero__about .lead {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero :global(.hero__topo) {
+    left: 0;
+    bottom: -40px;
+    width: min(680px, 90%);
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 2rem;
+  }
+
+  .service {
+    padding: 24px;
+    background: var(--surface);
+    border-radius: var(--radius);
+  }
+
+  .service__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .service h3 {
+    text-transform: uppercase;
+  }
+
+  .service p,
+  .step p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .step {
+    padding-top: 1rem;
+    border-top: 2px solid var(--surface-2);
+  }
+
+  .step__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .step h3 {
+    text-transform: uppercase;
+  }
+
+  .cta {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(32px, 6vw, 64px);
+    border-radius: 28px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cta h2 {
+    max-width: 22ch;
+    position: relative;
+  }
+
+  .cta .lead {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta :global(.cta__topo) {
+    right: -60px;
+    bottom: -60px;
+    width: 560px;
+  }
+
+  @media (max-width: 1099px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .services,
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .services,
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

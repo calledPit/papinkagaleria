@@ -1,0 +1,105 @@
+---
+import { Font } from 'astro:assets';
+import Sidebar from '../components/Sidebar.astro';
+import Topbar from '../components/Topbar.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../config/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** URL absolut atau path gambar untuk preview saat dibagikan. */
+  image?: string;
+  /** Satu atau beberapa objek schema.org untuk JSON-LD. */
+  jsonLd?: object | object[];
+  noindex?: boolean;
+}
+
+const { title, description = site.description, image, jsonLd, noindex = false } = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} · ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = image ? new URL(image, site.url).href : undefined;
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: `+${site.whatsapp.number}`,
+    contactType: 'customer service',
+    availableLanguage: ['Indonesian'],
+  },
+};
+const schemas = [organization, ...(jsonLd ? [jsonLd].flat() : [])];
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#1d1d1f" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+
+    <Font cssVariable="--font-display" preload />
+    <Font cssVariable="--font-body" />
+
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a class="sr-only skip-link" href="#konten">Langsung ke konten</a>
+    <div class="shell">
+      <Sidebar />
+      <div class="shell__main">
+        <Topbar />
+        <main id="konten">
+          <slot />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .shell {
+    display: grid;
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    min-height: 100vh;
+  }
+
+  .shell__main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  @media (max-width: 760px) {
+    .shell {
+      display: block;
+      padding-bottom: 72px;
+    }
+  }
+</style>

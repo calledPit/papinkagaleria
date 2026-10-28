@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from './ProductCard.astro';
+import Breadcrumbs, { type Crumb } from './Breadcrumbs.astro';
+import Topo from './Topo.astro';
+import { categories, site, type Category } from '../config/site';
+import { formatPrice, productPath, type Product } from '../lib/products';
+
+interface Props {
+  title: string;
+  heading: string;
+  /** Bagian judul yang diberi highlight warna aksen. */
+  highlight: string;
+  description: string;
+  crumbs: Crumb[];
+  products: Product[];
+}
+
+const { title, heading, highlight, description, crumbs, products } = Astro.props;
+const current = Astro.url.pathname;
+const filters = [
+  { href: '/produk/', label: 'Semua' },
+  ...(Object.keys(categories) as Category[]).map((c) => ({ href: `/produk/${c}/`, label: categories[c].label })),
+];
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${heading} ${highlight}`,
+  itemListElement: products.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: new URL(productPath(p), site.url).href,
+    name: `${p.data.code} ${p.data.name} - ${formatPrice(p.data.price)}`,
+  })),
+};
+---
+
+<Base title={title} description={description} jsonLd={itemList}>
+  <section class="section catalog">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="display">
+        <span class="line">{heading}</span>
+        <span class="line"><span class="hl">{highlight}</span></span>
+      </h1>
+      <p class="lead">{description}</p>
+
+      <nav class="chips" aria-label="Filter kategori">
+        {
+          filters.map((f) => (
+            <a href={f.href} aria-current={current === f.href ? 'page' : undefined}>
+              {f.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="product-grid">
+        {products.map((p) => <ProductCard product={p} headingLevel="h2" />)}
+      </div>
+
+      <p class="note">{site.customNote}</p>
+    </div>
+    <Topo class="catalog__topo" />
+  </section>
+</Base>
+
+<style>
+  .catalog {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .catalog .display {
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+  }
+
+  .chips {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .note {
+    margin: 2.5rem 0 0;
+    text-align: center;
+    color: var(--muted);
+  }
+
+  .catalog :global(.catalog__topo) {
+    top: 0;
+    right: -80px;
+    width: 600px;
+    opacity: 0.18;
+  }
+</style>

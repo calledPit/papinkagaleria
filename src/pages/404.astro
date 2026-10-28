@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Halaman tidak ditemukan" noindex>
+  <section class="section">
+    <div class="container notfound">
+      <p class="eyebrow">404</p>
+      <h1 class="display"><span class="line">Halaman</span><span class="line"><span class="hl">tidak ditemukan</span></span></h1>
+      <p class="lead">Halaman yang Anda cari mungkin sudah dipindah. Silakan lihat katalog kami.</p>
+      <a href="/produk/" class="btn btn--accent">Lihat Katalog</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notfound {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

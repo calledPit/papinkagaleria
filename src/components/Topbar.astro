@@ -1,0 +1,67 @@
+---
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { whatsappLink } from '../lib/products';
+---
+
+<header class="topbar">
+  <a href="/" class="brand">
+    <span class="brand__name">PAPINKA</span>
+    <span class="brand__sub">GALERIA</span>
+  </a>
+  <a href={whatsappLink()} class="topbar__wa" target="_blank" rel="noopener">
+    <WhatsAppIcon size={16} />
+    <span>Chat WhatsApp</span>
+  </a>
+</header>
+
+<style>
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+    z-index: 5;
+    height: var(--topbar-h);
+    padding: 0 var(--gutter);
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+    font-family: var(--font-display);
+  }
+
+  .brand__name {
+    font-weight: 900;
+    font-size: 1.15rem;
+    letter-spacing: 0.12em;
+  }
+
+  .brand__sub {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .topbar__wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    background: var(--surface);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .topbar__wa:hover {
+    background: var(--wa);
+  }
+</style>

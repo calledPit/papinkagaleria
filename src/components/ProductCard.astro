@@ -1,0 +1,160 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { categories } from '../config/site';
+import { formatCapacity, formatPrice, productPath, productWhatsappLink, type Product } from '../lib/products';
+
+interface Props {
+  product: Product;
+  headingLevel?: 'h2' | 'h3';
+  active?: boolean;
+  /** Index untuk panel interaktif di beranda. */
+  index?: number;
+}
+
+const { product, headingLevel: Heading = 'h3', active = false, index } = Astro.props;
+const { code, name, category, capacityMl, price, image, imageAlt } = product.data;
+---
+
+<article class:list={['card', { 'is-active': active }]} data-card={index}>
+  <div class="card__media">
+    <Image src={image} alt={imageAlt} width={400} height={400} fit="cover" />
+  </div>
+  <Heading class="card__name">
+    <a href={productPath(product)} class="card__link">{name}</a>
+  </Heading>
+  <p class="card__meta">{code} · {formatCapacity(capacityMl)} · {categories[category].label}</p>
+  <div class="card__foot">
+    <span class="card__price">{formatPrice(price)}</span>
+    <span class="card__actions">
+      <a
+        href={productWhatsappLink(product)}
+        class="icon-btn card__wa"
+        target="_blank"
+        rel="noopener"
+        aria-label={`Pesan ${code} via WhatsApp`}
+      >
+        <Icon name="bag" size={15} />
+      </a>
+      <span class="icon-btn" aria-hidden="true"><Icon name="arrow" size={15} /></span>
+    </span>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 14px 14px 16px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    transition:
+      background-color 0.2s,
+      transform 0.2s;
+  }
+
+  .card:hover {
+    background: var(--surface-2);
+  }
+
+  .card.is-active {
+    background: #4a4a4f;
+  }
+
+  .card__media {
+    aspect-ratio: 1;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--surface-2);
+    margin-bottom: 0.6rem;
+  }
+
+  .card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card__name {
+    font-size: 0.92rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  /* Seluruh kartu bisa diklik lewat link judul */
+  .card__link {
+    text-decoration: none;
+  }
+
+  .card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .card__meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.6rem;
+  }
+
+  .card__price {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .card__actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .card__wa {
+    position: relative;
+    z-index: 1;
+  }
+
+  .card__wa:hover {
+    background: var(--wa);
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      padding: 10px 10px 12px;
+    }
+
+    .card__name {
+      font-size: 0.82rem;
+    }
+
+    .card__price {
+      font-size: 0.95rem;
+    }
+
+    .card__actions .icon-btn:last-child {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card {
+      transition: none;
+    }
+  }
+</style>

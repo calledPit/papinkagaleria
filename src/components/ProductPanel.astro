@@ -1,0 +1,314 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+import { PANEL_IMAGE_SIZE, panelData, type Product } from '../lib/products';
+
+interface Props {
+  product: Product;
+  /** Tampilkan tombol sebelumnya/berikutnya (beranda). */
+  interactive?: boolean;
+  /** Jika diisi, tombol X tampil dan mengarah ke URL ini. */
+  closeHref?: string;
+  showDescription?: boolean;
+  titleTag?: 'h2' | 'p';
+}
+
+const { product, interactive = false, closeHref, showDescription = true, titleTag: Title = 'h2' } = Astro.props;
+const d = await panelData(product);
+---
+
+<aside class="panel" data-panel aria-label="Detail produk">
+  {
+    closeHref && (
+      <a href={closeHref} class="panel__close" aria-label="Kembali ke katalog">
+        <Icon name="close" />
+      </a>
+    )
+  }
+
+  <div class="panel__stage">
+    <div class="panel__img">
+      <img data-p="img" src={d.img} alt={d.alt} width={PANEL_IMAGE_SIZE} height={PANEL_IMAGE_SIZE} />
+    </div>
+    <div class="panel__pedestal" aria-hidden="true"></div>
+    {
+      interactive && (
+        <div class="panel__nav">
+          <button type="button" data-p="prev" aria-label="Produk sebelumnya">
+            <Icon name="prev" size={14} />
+          </button>
+          <button type="button" data-p="next" aria-label="Produk berikutnya">
+            <Icon name="next" size={14} />
+          </button>
+        </div>
+      )
+    }
+  </div>
+
+  <p class="panel__code" data-p="code">{d.code}</p>
+  <Title class="panel__title">
+    <span data-p="name">{d.name}</span>{' '}
+    <small data-p="capacity">({d.capacity})</small>
+  </Title>
+
+  <ul class="features">
+    <li>
+      <span class="features__icon"><Icon name="ruler" /></span>
+      <span data-p="capacity-label">{d.capacity}</span>
+    </li>
+    <li>
+      <span class="features__icon"><Icon name="sparkle" /></span>
+      <span data-p="feature">{d.feature}</span>
+    </li>
+    <li>
+      <span class="features__icon"><Icon name="tag" /></span>
+      <span data-p="category">{d.category}</span>
+    </li>
+  </ul>
+
+  {
+    showDescription && (
+      <p class="panel__desc">
+        <span data-p="desc">{d.desc}</span>{' '}
+        <a href={d.url} data-p="url">
+          Selengkapnya
+        </a>
+      </p>
+    )
+  }
+
+  <a href={d.wa} data-p="wa" class="order" target="_blank" rel="noopener">
+    <span class="order__icon"><Icon name="bag" size={16} /></span>
+    <span class="order__label">{site.whatsapp.label}</span>
+    <span class="order__price" data-p="price">{d.price}</span>
+  </a>
+</aside>
+
+<style>
+  .panel {
+    position: relative;
+    background: var(--panel);
+    color: var(--panel-ink);
+    padding: clamp(20px, 3vw, 36px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: var(--panel-ink);
+  }
+
+  .panel__close:hover {
+    background: rgb(0 0 0 / 0.08);
+  }
+
+  .panel__stage {
+    position: relative;
+    padding: 12px 8% 34px;
+    margin-bottom: 1.25rem;
+  }
+
+  .panel__img {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 1;
+    max-width: 340px;
+    margin-inline: auto;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 24px 40px -18px rgb(0 0 0 / 0.45);
+  }
+
+  .panel__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Alas melingkar di bawah foto, seperti di referensi */
+  .panel__pedestal {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: 10px;
+    height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, #f1efeb 0%, #e6e3de 55%, #cfcbc5 100%);
+    box-shadow: inset 0 -6px 12px rgb(0 0 0 / 0.08);
+  }
+
+  .panel__nav {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 999px;
+    background: var(--panel-ink);
+  }
+
+  .panel__nav button {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 22px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .panel__nav button:hover {
+    background: rgb(255 255 255 / 0.15);
+  }
+
+  .panel__code {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--panel-muted);
+    margin: 0 0 0.25rem;
+  }
+
+  .panel__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+  }
+
+  .panel__title small {
+    font-size: 0.6em;
+    font-weight: 600;
+    text-transform: none;
+    color: var(--panel-muted);
+  }
+
+  .features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .features li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .features__icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--panel-tile);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
+  }
+
+  .panel__desc {
+    font-size: 0.85rem;
+    color: var(--panel-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .panel__desc a {
+    color: var(--panel-ink);
+    font-weight: 700;
+  }
+
+  .order {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 8px 20px 8px 8px;
+    border-radius: 999px;
+    background: var(--panel-ink);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-display);
+    transition: transform 0.15s;
+  }
+
+  .order:hover {
+    transform: translateY(-1px);
+  }
+
+  .order__icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--panel-ink);
+    flex-shrink: 0;
+  }
+
+  .order__label {
+    flex: 1;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .order__price {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* Layar lebar: panel di samping konten, setinggi layar sampai ke atas, tetap terlihat saat scroll */
+  @media (min-width: 1100px) {
+    .panel {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      margin-top: calc(-1 * var(--topbar-h));
+      padding-top: calc(var(--topbar-h) + 8px);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    .panel__close {
+      top: calc(var(--topbar-h) + 4px);
+    }
+
+    .panel__img {
+      max-width: min(320px, 34vh);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .order {
+      transition: none;
+    }
+  }
+</style>
