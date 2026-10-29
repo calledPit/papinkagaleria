@@ -43,6 +43,8 @@ const howTo = {
         <p>{ui.customNote}</p>
       </div>
 
+      <p class="hours"><strong>{ui.hoursLabel}:</strong> {ui.hours}</p>
+
       <a href={whatsappLink(locale)} class="btn btn--accent" target="_blank" rel="noopener">
         <WhatsAppIcon size={16} />
         {ui.orderLabel}
@@ -91,6 +93,16 @@ const howTo = {
 
   .custom {
     margin-bottom: 2rem;
+  }
+
+  .hours {
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .hours strong {
+    color: var(--text);
+    font-weight: 500;
   }
 
   .custom ul {

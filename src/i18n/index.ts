@@ -136,7 +136,7 @@ export const ui = {
   id: {
     tagline: 'Souvenir Custom Palembang & Lampung',
     description:
-      'Papinka Galeria menyediakan souvenir custom di Palembang, Lampung, dan Sumatera Selatan: mug, tumbler, totebag, kerajinan bambu, dan pembatas buku dengan logo, sablon, atau grafir.',
+      'Papinka Galeria menyediakan souvenir custom di Palembang, Yogyakarta, Lampung, dan Sumatera Selatan: mug, tumbler, totebag, kerajinan bambu, dan pembatas buku dengan logo, sablon, atau grafir.',
     customNote: 'Untuk produk custom, harga menyesuaikan desain dan spesifikasi pesanan.',
     skip: 'Langsung ke konten',
     navMain: 'Navigasi utama',
@@ -202,8 +202,10 @@ export const ui = {
     backToBlog: '← Semua artikel',
     articleCtaTitle: 'Butuh souvenir untuk acara Anda?',
     articleCtaText:
-      'Ceritakan acara, jumlah, dan desain yang Anda mau. Kami melayani pesanan dari Palembang, Lampung, dan seluruh Sumatera Selatan.',
+      'Ceritakan acara, jumlah, dan desain yang Anda mau. Kami melayani pesanan dari Palembang, Yogyakarta, Lampung, dan seluruh Sumatera Selatan.',
     serviceArea: 'Area layanan',
+    hoursLabel: 'Jam operasional',
+    hours: 'Senin–Sabtu, 09.00–17.00 WIB',
     notFoundTitle: 'Halaman tidak ditemukan',
     notFoundLines: ['Halaman', 'tidak ditemukan'],
     notFoundText: 'Halaman yang Anda cari mungkin sudah dipindah. Silakan lihat katalog kami.',
@@ -211,7 +213,7 @@ export const ui = {
   en: {
     tagline: 'Custom Souvenirs in Palembang & Lampung',
     description:
-      'Papinka Galeria makes custom souvenirs in Palembang, Lampung, and South Sumatra: mugs, tumblers, tote bags, bamboo crafts, and bookmarks with your logo, print, or engraving.',
+      'Papinka Galeria makes custom souvenirs in Palembang, Yogyakarta, Lampung, and South Sumatra: mugs, tumblers, tote bags, bamboo crafts, and bookmarks with your logo, print, or engraving.',
     customNote: 'For custom products, prices depend on the design and order specifications.',
     skip: 'Skip to content',
     navMain: 'Main navigation',
@@ -277,8 +279,10 @@ export const ui = {
     backToBlog: '← All articles',
     articleCtaTitle: 'Need souvenirs for your event?',
     articleCtaText:
-      'Tell us about your event, quantity, and design. We serve orders from Palembang, Lampung, and all of South Sumatra.',
+      'Tell us about your event, quantity, and design. We serve orders from Palembang, Yogyakarta, Lampung, and all of South Sumatra.',
     serviceArea: 'Service area',
+    hoursLabel: 'Opening hours',
+    hours: 'Monday–Saturday, 9 AM–5 PM (WIB)',
     notFoundTitle: 'Page not found',
     notFoundLines: ['Page', 'not found'],
     notFoundText: 'The page you are looking for may have moved. Please browse our catalog.',

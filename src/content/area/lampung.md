@@ -2,7 +2,7 @@
 slug: souvenir-custom-lampung
 area: Lampung
 areaType: State
-order: 2
+order: 3
 title: "Souvenir Custom Lampung: Tumbler, Mug, Totebag & Kerajinan Bambu"
 description: "Pesan souvenir custom di Bandar Lampung dan seluruh Lampung: tumbler grafir, mug, totebag, dan kerajinan bambu untuk kantor, instansi, dan pernikahan."
 headline: ["Souvenir Custom", "Lampung"]

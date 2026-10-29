@@ -41,6 +41,7 @@ const organization = {
   sameAs: [site.social.instagram],
   areaServed: [
     { '@type': 'City', name: 'Palembang' },
+    { '@type': 'City', name: 'Yogyakarta' },
     { '@type': 'State', name: 'Lampung' },
     { '@type': 'State', name: 'Sumatera Selatan' },
   ],
@@ -48,6 +49,12 @@ const organization = {
     '@type': 'ContactPoint',
     telephone: `+${site.whatsapp.number}`,
     contactType: 'customer service',
+    hoursAvailable: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: site.hours.days,
+      opens: site.hours.opens,
+      closes: site.hours.closes,
+    },
     availableLanguage: ['Indonesian', 'English'],
   },
 };

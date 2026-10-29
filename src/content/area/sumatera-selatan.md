@@ -2,7 +2,7 @@
 slug: souvenir-custom-sumatera-selatan
 area: Sumatera Selatan
 areaType: State
-order: 3
+order: 4
 title: "Souvenir Custom Sumatera Selatan untuk Perusahaan & Instansi"
 description: "Souvenir custom untuk seluruh Sumatera Selatan: Palembang, Prabumulih, Lubuklinggau, Pagar Alam, Lahat, Muara Enim, dan Baturaja. Tumbler, mug, totebag, dan kerajinan."
 headline: ["Souvenir Custom", "Sumatera Selatan"]

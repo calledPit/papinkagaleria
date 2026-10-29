@@ -14,7 +14,7 @@ const year = new Date().getFullYear();
     <span>{ui.serviceArea}:</span>
     {areas.map((a) => <a href={`/${a.data.slug}/`}>Souvenir {a.data.area}</a>)}
   </div>
-  <small>&copy; {year} {site.name}</small>
+  <small>&copy; {year} {site.name} · {ui.hoursLabel}: {ui.hours}</small>
   <nav aria-label={ui.navFooter}>
     <a href={paths.catalog(locale)}>{ui.catalog}</a>
     <a href={paths.howTo(locale)}>{ui.howTo}</a>

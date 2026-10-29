@@ -28,6 +28,13 @@ export const site = {
     },
   },
 
+  /** Jam operasional (WIB). Dipakai di halaman Cara Pesan, footer, dan data untuk Google. */
+  hours: {
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '09:00',
+    closes: '17:00',
+  },
+
   social: {
     instagram: 'https://www.instagram.com/papinka_galeria',
     instagramHandle: '@papinka_galeria',
