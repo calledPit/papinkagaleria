@@ -54,7 +54,7 @@ Single-color printing and full-color DTF are available for bottle/tumbler bags a
 
 The design is printed across the entire mug surface, not just a small area. Great for illustrations, patterns, or photo collages.
 
-**Choose full print if:** you want a truly personal mug covered in design, like the Full Print Enamel Mug with a knitted handle (Rp100,000).
+**Choose full print if:** you want a truly personal mug covered in design, like the Full Print Enamel Mug with a knitted handle.
 
 ## How to prepare your design file
 

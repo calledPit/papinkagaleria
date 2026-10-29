@@ -3,7 +3,6 @@ code: 'TUMBLER 005'
 name: 'Tumbler Mini Gagang Kayu'
 category: tumbler
 capacityMl: 300
-price: 45000
 order: 6
 badges: []
 image: ../../assets/products/tumbler-005-300ml.jpg

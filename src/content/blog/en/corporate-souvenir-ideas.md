@@ -3,7 +3,7 @@ lang: en
 slug: corporate-souvenir-ideas
 key: office-souvenir
 title: "Corporate Souvenir Ideas: For Seminars, Clients, and Employees"
-description: "Corporate souvenir ideas people use every day: seminar kits, client gifts, and employee appreciation. With price ranges and tips for preparing your logo."
+description: "Corporate souvenir ideas people use every day: seminar kits, client gifts, and employee appreciation. With example kits and tips for preparing your logo."
 date: 2026-10-29
 cover: ../../../assets/blog/office-souvenir.jpg
 coverAlt: "Collage of a navy document bag, logo bottle tumblers, and a custom logo mug"
@@ -32,14 +32,14 @@ Participants need something to carry materials and something to drink from. A co
 
 For clients, a premium feel matters more than quantity. Choose one good item rather than several ordinary ones.
 
-- **Logo-engraved tumbler.** The logo is permanently etched and looks elegant. Tumbler 001 (500ml) is Rp135,000 and the wood-pattern Tumbler 002 (500ml) is Rp150,000, both including engraving.
+- **Logo-engraved tumbler.** The logo is permanently etched and looks elegant. Tumbler 001 (500ml) and the wood-pattern Tumbler 002 (500ml) both include engraving.
 - **Bamboo crafts** such as a food carrier or basket bag as a hamper container. Ideal for companies that want to highlight local and eco-friendly values.
 
 ## Employee appreciation and company anniversaries
 
 For large quantities on a limited budget, choose everyday items:
 
-- **Logo mug.** The Lidded Custom Logo Mug (350ml) starts at Rp30,000 and comes in many colors.
+- **Logo mug.** The Lidded Custom Logo Mug (350ml) is one of the most affordable options and comes in many colors.
 - **Bamboo pencil holder** for desks.
 - **Bottle/tumbler bag** for employees who travel often.
 

@@ -43,7 +43,7 @@ Batok kelapa biasanya jadi sisa. Diolah menjadi gelas, bahan ini mendapat fungsi
 
 Satu tumbler yang dipakai setiap hari menggantikan banyak botol plastik. Agar benar-benar dipakai, pilih yang nyaman dibawa dan tampilannya rapi.
 
-Tumbler dengan **grafir logo** adalah pilihan aman untuk perusahaan: logonya terukir, bukan stiker, jadi tidak mudah mengelupas. Di Papinka Galeria, Tumbler 001 (500ml) seharga Rp135.000 sudah termasuk biaya grafir.
+Tumbler dengan **grafir logo** adalah pilihan aman untuk perusahaan: logonya terukir, bukan stiker, jadi tidak mudah mengelupas. Di Papinka Galeria, Tumbler 001 (500ml) sudah termasuk biaya grafir.
 
 ## 5. Totebag berbahan blacu
 

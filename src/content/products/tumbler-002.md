@@ -3,7 +3,6 @@ code: 'TUMBLER 002'
 name: 'Tumbler Motif Kayu Grafir'
 category: tumbler
 capacityMl: 500
-price: 150000
 order: 2
 badges: ['Include grafir']
 image: ../../assets/products/tumbler-002.jpg

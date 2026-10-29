@@ -3,7 +3,7 @@ lang: id
 slug: ide-souvenir-kantor
 key: office-souvenir
 title: "Ide Souvenir Kantor: Pilihan untuk Seminar, Klien, dan Karyawan"
-description: "Ide souvenir kantor yang dipakai setiap hari: seminar kit, hadiah klien, dan apresiasi karyawan. Lengkap dengan kisaran harga dan tips menyiapkan logo."
+description: "Ide souvenir kantor yang dipakai setiap hari: seminar kit, hadiah klien, dan apresiasi karyawan. Lengkap dengan contoh paket dan tips menyiapkan logo."
 date: 2026-10-29
 cover: ../../../assets/blog/office-souvenir.jpg
 coverAlt: "Kolase tas dokumen navy, tumbler botol logo, dan mug custom logo"
@@ -32,14 +32,14 @@ Peserta butuh tempat untuk membawa materi dan minum. Paket yang umum dan berguna
 
 Untuk klien, kesan premium lebih penting daripada jumlah. Pilih satu barang yang bagus, bukan banyak barang biasa.
 
-- **Tumbler grafir logo.** Logo terukir permanen dan terlihat elegan. Tumbler 001 (500ml) Rp135.000 dan Tumbler 002 motif kayu (500ml) Rp150.000, keduanya sudah termasuk grafir.
+- **Tumbler grafir logo.** Logo terukir permanen dan terlihat elegan. Tumbler 001 (500ml) dan Tumbler 002 motif kayu (500ml) sudah termasuk grafir.
 - **Kerajinan bambu** seperti rantang atau tas keranjang sebagai wadah hampers. Cocok untuk perusahaan yang ingin menonjolkan nilai lokal dan ramah lingkungan.
 
 ## Apresiasi karyawan dan ulang tahun perusahaan
 
 Untuk jumlah banyak dengan anggaran terbatas, pilih barang yang dipakai sehari-hari:
 
-- **Mug dengan logo.** Mug Tutup Custom Logo (350ml) mulai Rp30.000 dan tersedia banyak pilihan warna.
+- **Mug dengan logo.** Mug Tutup Custom Logo (350ml) termasuk pilihan paling terjangkau dan tersedia banyak pilihan warna.
 - **Tempat pensil bambu** untuk meja kerja.
 - **Tas botol/tumbler** untuk karyawan yang sering bepergian.
 

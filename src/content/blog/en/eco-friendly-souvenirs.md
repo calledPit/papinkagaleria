@@ -43,7 +43,7 @@ Coconut shells are usually waste. Turned into cups, they get a new purpose. They
 
 One tumbler used daily replaces many plastic bottles. To make sure it gets used, choose one that is comfortable to carry and looks clean.
 
-A tumbler with an **engraved logo** is a safe choice for companies: the logo is etched, not a sticker, so it does not peel off. At Papinka Galeria, Tumbler 001 (500ml) costs Rp135,000 including engraving.
+A tumbler with an **engraved logo** is a safe choice for companies: the logo is etched, not a sticker, so it does not peel off. At Papinka Galeria, Tumbler 001 (500ml) includes engraving in the price.
 
 ## 5. Calico tote bags
 

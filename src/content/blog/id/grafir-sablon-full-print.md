@@ -54,7 +54,7 @@ Sablon satu warna dan DTF full color tersedia untuk tas botol/tumbler dan tas bu
 
 Desain dicetak menutupi seluruh permukaan mug, bukan hanya satu area kecil. Cocok untuk ilustrasi, pola, atau kumpulan gambar.
 
-**Pilih full print jika:** Anda ingin mug yang benar-benar personal dan penuh desain, seperti Mug Enamel Full Print dengan gagang rajut (Rp100.000).
+**Pilih full print jika:** Anda ingin mug yang benar-benar personal dan penuh desain, seperti Mug Enamel Full Print dengan gagang rajut.
 
 ## Cara menyiapkan file desain
 

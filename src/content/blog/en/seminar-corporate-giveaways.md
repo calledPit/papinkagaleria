@@ -40,7 +40,7 @@ A bamboo pencil holder suits events with an eco or local-culture theme, and afte
 
 Speakers and guests of honor should get something different from participants.
 
-- **Tumbler** with the logo and event name, such as the Bottle Tumbler with Handle Lid (500ml) at Rp80,000 or an engraved tumbler from Rp135,000.
+- **Tumbler** with the logo and event name, such as the Bottle Tumbler with Handle Lid (500ml) or an engraved tumbler for a more premium feel.
 - **Bamboo craft hamper** filled with local products as a thank-you.
 
 ## For government agencies and public events

@@ -36,7 +36,8 @@ const organization = {
   '@id': `${site.url}/#organization`,
   name: site.name,
   url: site.url,
-  logo: abs('/og-image.jpg'),
+  logo: abs('/logo.png'),
+  image: abs('/og-image.jpg'),
   sameAs: [site.social.instagram],
   areaServed: [
     { '@type': 'City', name: 'Palembang' },
@@ -61,7 +62,7 @@ const schemas = [organization, ...(jsonLd ? [jsonLd].flat() : [])];
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="robots" content={noindex ? 'noindex' : 'index, follow, max-image-preview:large'} />
     {
       !noindex &&
         alternates &&
@@ -70,8 +71,11 @@ const schemas = [organization, ...(jsonLd ? [jsonLd].flat() : [])];
           .map((l) => <link rel="alternate" hreflang={localeMeta[l].htmlLang} href={abs(alternates[l]!)} />)
     }
     {!noindex && alternates?.[defaultLocale] && <link rel="alternate" hreflang="x-default" href={abs(alternates[defaultLocale]!)} />}
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#1d1d1f" />
 

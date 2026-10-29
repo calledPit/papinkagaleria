@@ -60,4 +60,4 @@ Bisa. Kami bantu menyusun paket peserta dan narasumber sesuai anggaran. Sampaika
 
 ### Berapa harga souvenir custom?
 
-Mug custom logo mulai Rp30.000, tumbler mulai Rp45.000, dan tumbler grafir mulai Rp135.000. Harga produk custom menyesuaikan desain dan jumlah pesanan.
+Harga produk custom menyesuaikan desain dan jumlah pesanan. Kirim kebutuhan Anda lewat WhatsApp untuk mendapatkan penawaran harga.

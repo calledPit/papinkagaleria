@@ -150,6 +150,7 @@ export const ui = {
     homeTag: '#SouvenirCustom',
     homeText:
       'Mug, tumbler, totebag, hingga kerajinan bambu yang bisa dipersonalisasi dengan logo, nama, atau desain Anda. Cocok untuk hadiah, hampers, dan souvenir perusahaan.',
+    orderTypes: ['Pesan satuan untuk hadiah personal', 'Pesan banyak untuk acara & perusahaan'],
     viewCatalog: 'Lihat Katalog',
     catalogTitle: 'Katalog Souvenir Custom',
     catalogHeading: 'Katalog',
@@ -157,7 +158,7 @@ export const ui = {
     catalogDescription:
       'Katalog souvenir custom Papinka Galeria: mug, tumbler, totebag, kerajinan bambu, dan pembatas buku untuk hadiah, hampers, dan souvenir perusahaan.',
     collection: 'Koleksi',
-    categoryTitleSuffix: 'Harga & Pilihan',
+    categoryTitleSuffix: 'Pilihan Produk',
     all: 'Semua',
     filterLabel: 'Filter kategori',
     more: (label: string) => `${label} lainnya`,
@@ -224,6 +225,7 @@ export const ui = {
     homeTag: '#CustomSouvenirs',
     homeText:
       'Mugs, tumblers, tote bags, and bamboo crafts personalized with your logo, name, or design. Perfect for gifts, hampers, and corporate souvenirs.',
+    orderTypes: ['Single custom orders for personal gifts', 'Bulk orders for events & companies'],
     viewCatalog: 'View Catalog',
     catalogTitle: 'Custom Souvenir Catalog',
     catalogHeading: 'Catalog',
@@ -231,7 +233,7 @@ export const ui = {
     catalogDescription:
       'Papinka Galeria custom souvenir catalog: mugs, tumblers, tote bags, bamboo crafts, and bookmarks for gifts, hampers, and corporate souvenirs.',
     collection: 'Collection',
-    categoryTitleSuffix: 'Prices & Options',
+    categoryTitleSuffix: 'Product Options',
     all: 'All',
     filterLabel: 'Category filter',
     more: (label: string) => `More ${label}`,

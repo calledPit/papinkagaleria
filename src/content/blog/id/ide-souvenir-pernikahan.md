@@ -24,11 +24,11 @@ Berikut ide yang praktis, plus tips memilihnya.
 
 ### Mug enamel dengan nama dan tanggal
 
-Mug enamel tampil klasik dan cocok untuk tema rustic maupun modern. Tambahkan nama pasangan dan tanggal pernikahan. Mug Enamel Putih (350ml) Rp32.000, atau Mug Enamel Warna (350ml) Rp35.000 jika ingin warna sesuai tema.
+Mug enamel tampil klasik dan cocok untuk tema rustic maupun modern. Tambahkan nama pasangan dan tanggal pernikahan. Pilih Mug Enamel Putih (350ml), atau Mug Enamel Warna (350ml) jika ingin warna sesuai tema.
 
 ### Tumbler mini
 
-Ukurannya pas untuk dibawa sehari-hari, jadi besar kemungkinan dipakai. Tumbler Mini Gagang Kayu (300ml) Rp45.000 dan Tumbler Mini Pastel (400ml) Rp50.000. Warna pastel cocok untuk tema pernikahan yang lembut.
+Ukurannya pas untuk dibawa sehari-hari, jadi besar kemungkinan dipakai. Pilihannya ada Tumbler Mini Gagang Kayu (300ml) dan Tumbler Mini Pastel (400ml). Warna pastel cocok untuk tema pernikahan yang lembut.
 
 ### Gelas batok kelapa
 
@@ -54,12 +54,12 @@ Wadah yang bagus membuat isinya terlihat lebih istimewa, dan wadahnya masih bisa
 4. **Pesan jauh hari.** Barang custom butuh waktu produksi. Sebutkan tanggal acara saat memesan agar jadwalnya bisa dipastikan.
 5. **Pikirkan cara membagikan.** Barang yang ringan dan tidak mudah pecah lebih aman dibawa pulang tamu.
 
-## Perkiraan anggaran per tamu
+## Pilihan berdasarkan tema
 
-| Anggaran | Pilihan |
+| Tema | Pilihan |
 | --- | --- |
-| Rp30.000–Rp35.000 | Mug enamel putih atau warna |
-| Rp45.000–Rp50.000 | Tumbler mini |
-| Tanya harga | Gelas batok, pembatas buku, kerajinan bambu |
+| Modern | Mug enamel putih atau warna, tumbler mini pastel |
+| Rustic dan outdoor | Gelas batok, tumbler mini gagang kayu |
+| Tradisional dan adat | Pembatas buku motif wayang, kerajinan bambu |
 
 Harga produk custom menyesuaikan desain dan jumlah pesanan. Kirim tema, jumlah tamu, dan tanggal acara Anda lewat WhatsApp, kami bantu carikan pilihan yang pas.

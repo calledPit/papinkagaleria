@@ -40,7 +40,7 @@ Tempat pensil bambu cocok untuk acara bertema lingkungan atau budaya lokal, dan 
 
 Narasumber dan tamu kehormatan sebaiknya mendapat barang yang berbeda dari peserta.
 
-- **Tumbler** dengan logo dan nama acara, misalnya Tumbler Botol Tutup Gagang (500ml) Rp80.000 atau tumbler grafir mulai Rp135.000.
+- **Tumbler** dengan logo dan nama acara, misalnya Tumbler Botol Tutup Gagang (500ml) atau tumbler grafir untuk kesan lebih premium.
 - **Hampers kerajinan bambu** berisi produk lokal sebagai tanda terima kasih.
 
 ## Untuk instansi dan acara pemerintahan

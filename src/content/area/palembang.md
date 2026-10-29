@@ -53,8 +53,8 @@ Bisa. Seluruh pemesanan dilakukan lewat WhatsApp. Sampaikan alamat atau kebutuha
 
 ### Berapa harga souvenir custom?
 
-Mug custom logo mulai Rp30.000 dan tumbler grafir mulai Rp135.000. Harga produk custom menyesuaikan desain, teknik, dan jumlah pesanan.
+Harga produk custom menyesuaikan desain, teknik, dan jumlah pesanan. Kirim kebutuhan Anda lewat WhatsApp untuk mendapatkan penawaran harga.
 
-### Apakah ada minimal pemesanan?
+### Apakah bisa pesan satuan?
 
-Jumlah minimal tergantung produk dan teknik custom yang dipilih. Tanyakan langsung lewat WhatsApp agar kami bisa memberi rincian yang tepat.
+Bisa. Anda bisa pesan satuan untuk hadiah personal, maupun dalam jumlah banyak untuk acara, kantor, dan instansi.

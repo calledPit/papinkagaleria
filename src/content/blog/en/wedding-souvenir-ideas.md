@@ -24,11 +24,11 @@ Here are practical ideas, plus tips for choosing.
 
 ### Enamel mugs with your names and date
 
-Enamel mugs look classic and suit both rustic and modern themes. Add your names and wedding date. The White Enamel Mug (350ml) is Rp32,000, or the Colored Enamel Mug (350ml) is Rp35,000 if you want colors that match your theme.
+Enamel mugs look classic and suit both rustic and modern themes. Add your names and wedding date. Choose the White Enamel Mug (350ml), or the Colored Enamel Mug (350ml) if you want colors that match your theme.
 
 ### Mini tumblers
 
-They are just the right size for everyday use, so guests are likely to use them. The Mini Tumbler with Wooden Handle (300ml) is Rp45,000 and the Pastel Mini Tumbler (400ml) is Rp50,000. Pastel colors suit softer wedding themes.
+They are just the right size for everyday use, so guests are likely to use them. Options include the Mini Tumbler with Wooden Handle (300ml) and the Pastel Mini Tumbler (400ml). Pastel colors suit softer wedding themes.
 
 ### Coconut shell cups
 
@@ -54,12 +54,12 @@ A good container makes the contents look more special, and the container can be 
 4. **Order well in advance.** Custom items need production time. Share your wedding date when ordering so the schedule can be confirmed.
 5. **Think about how guests take them home.** Light items that do not break easily travel better.
 
-## Budget per guest
+## Options by theme
 
-| Budget | Options |
+| Theme | Options |
 | --- | --- |
-| Rp30,000–Rp35,000 | White or colored enamel mug |
-| Rp45,000–Rp50,000 | Mini tumbler |
-| Ask for price | Coconut shell cups, bookmarks, bamboo crafts |
+| Modern | White or colored enamel mugs, pastel mini tumblers |
+| Rustic and outdoor | Coconut shell cups, mini tumblers with wooden handles |
+| Traditional | Wayang bookmarks, bamboo crafts |
 
 Custom product prices depend on the design and quantity. Send us your theme, guest count, and wedding date on WhatsApp, and we will help you find the right fit.

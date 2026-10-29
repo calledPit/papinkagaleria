@@ -22,8 +22,8 @@ Setiap Agustus, kantor, sekolah, dan lingkungan warga mengadakan perayaan HUT RI
 
 Hadiah lomba sebaiknya dibuat bertingkat agar adil dan tetap sesuai anggaran.
 
-- **Juara 1:** tumbler grafir. Tumbler 001 (500ml) Rp135.000 sudah termasuk grafir logo atau tulisan.
-- **Juara 2:** mug dengan logo atau tulisan "HUT RI ke-81". Mug Tutup Custom Logo (350ml) mulai Rp30.000 dan tersedia warna merah maupun putih.
+- **Juara 1:** tumbler grafir. Tumbler 001 (500ml) sudah termasuk grafir logo atau tulisan.
+- **Juara 2:** mug dengan logo atau tulisan "HUT RI ke-81". Mug Tutup Custom Logo (350ml) tersedia dalam warna merah maupun putih.
 - **Juara 3 dan peserta:** totebag atau pembatas buku. Ringan, murah, dan tetap berguna.
 
 ## Acara kantor

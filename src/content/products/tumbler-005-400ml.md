@@ -3,7 +3,6 @@ code: 'TUMBLER 005'
 name: 'Tumbler Mini Pastel'
 category: tumbler
 capacityMl: 400
-price: 50000
 order: 5
 badges: []
 image: ../../assets/products/tumbler-005-400ml.jpg

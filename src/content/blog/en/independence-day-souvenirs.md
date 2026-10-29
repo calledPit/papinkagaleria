@@ -22,8 +22,8 @@ Every August, offices, schools, and neighborhoods in Indonesia celebrate Indepen
 
 Tiered prizes feel fair and keep the budget under control.
 
-- **1st place:** an engraved tumbler. Tumbler 001 (500ml) is Rp135,000 including logo or text engraving.
-- **2nd place:** a mug with a logo or the words "HUT RI ke-81" (81st Independence Day). The Lidded Custom Logo Mug (350ml) starts at Rp30,000 and comes in red and white.
+- **1st place:** an engraved tumbler. Tumbler 001 (500ml) includes logo or text engraving.
+- **2nd place:** a mug with a logo or the words "HUT RI ke-81" (81st Independence Day). The Lidded Custom Logo Mug (350ml) comes in red and white.
 - **3rd place and participants:** a tote bag or bookmark. Light, affordable, and still useful.
 
 ## Office celebrations
